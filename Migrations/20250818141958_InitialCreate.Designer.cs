@@ -11,7 +11,7 @@ using ToDoApi.Data;
 namespace ToDoApi.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250816121924_InitialCreate")]
+    [Migration("20250818141958_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />

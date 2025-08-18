@@ -2,13 +2,20 @@
 using Microsoft.EntityFrameworkCore.Design;
 using ToDoApi.Data;
 
-    public class AppDbContextFactory : IDesignTimeDbContextFactory<AppDbContext>
+public class AppDbContextFactory : IDesignTimeDbContextFactory<AppDbContext>
+{
+    public AppDbContext CreateDbContext(string[] args)
     {
-        public AppDbContext CreateDbContext(string[] args)
-        {
-            var optionsBuilder = new DbContextOptionsBuilder<AppDbContext>();
-            optionsBuilder.UseNpgsql("Host=localhost;Port=5432;Database=DBtodo;Username=postgres;Password=postgres");
-            return new AppDbContext(optionsBuilder.Options);
-        }
-    }
+        IConfigurationRoot configuration = new ConfigurationBuilder()
+            .SetBasePath(Directory.GetCurrentDirectory())
+            .AddJsonFile("appsettings.json")
+            .Build();
 
+        var optionsBuilder = new DbContextOptionsBuilder<AppDbContext>();
+        var connectionString = configuration.GetConnectionString("DefaultConnection");
+
+        optionsBuilder.UseNpgsql(connectionString);
+
+        return new AppDbContext(optionsBuilder.Options);
+    }
+}

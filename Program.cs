@@ -17,7 +17,7 @@ app.MapPost("/tasks", async (AppDbContext db, TaskItem task) =>
 {
     db.Tasks.Add(task);
     await db.SaveChangesAsync();
-    return Results.Created($"/tasks{task.Id}", task);
+    return Results.StatusCode(201);
 });
 
 app.MapGet("/tasks", async (AppDbContext db, string? status, string? priority) => 
